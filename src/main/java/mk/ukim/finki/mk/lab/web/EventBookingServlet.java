@@ -12,8 +12,8 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
 
-
-@WebServlet(name = "EventBookingServlet",urlPatterns = {"/eventBooking"})
+//@WebServlet
+//@WebServlet(name = "EventBookingServlet",urlPatterns = {"/eventBooking"},value ="/servlet")
 public class EventBookingServlet extends HttpServlet {
 
     private final SpringTemplateEngine springTemplateEngine;
@@ -24,11 +24,25 @@ public class EventBookingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        System.out.println("Get /eventbooking ID: "+req.getSession().getId());
+
         IWebExchange webExchange= JakartaServletWebApplication
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
 
         WebContext context=new WebContext(webExchange);
+
+        String u_name= (String) req.getSession().getAttribute("user_name");
+        String title= (String) req.getSession().getAttribute("title");
+        String numTickets= (String) req.getSession().getAttribute("ticket_num");
+
+        context.setVariable("user_name",u_name);
+        context.setVariable("title",title);
+        context.setVariable("ticket_num",numTickets);
+        context.setVariable("ip_address",req.getRemoteAddr());
+
+
 
         springTemplateEngine.process("bookingConfirmation.html",context,resp.getWriter());
 
@@ -36,9 +50,14 @@ public class EventBookingServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+
+
+        String user_name=req.getParameter("user_the_name");
+        req.getSession().setAttribute("user_name",user_name);
+
+
         //TODO if we need to store new Bookings we do it here
 
-        //resp.sendRedirect("/eventBooking");
+        resp.sendRedirect("/eventBooking");
     }
 }

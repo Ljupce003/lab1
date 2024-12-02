@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-@WebServlet(name = "EventListServlet",urlPatterns = {""})
+//@WebServlet(name = "EventListServlet",urlPatterns = {""})
 public class EventListServlet extends HttpServlet {
     private final EventService eventService;
     private final SpringTemplateEngine springTemplateEngine;
@@ -32,6 +32,8 @@ public class EventListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
         IWebExchange webExchange= JakartaServletWebApplication
                 .buildApplication(getServletContext())
                 .buildExchange(req,resp);
@@ -56,6 +58,9 @@ public class EventListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        System.out.println("Post / ID: "+req.getSession().getId());
+
         String text=req.getParameter("text");
         Double rating= Double.parseDouble(req.getParameter("rating").strip());
 

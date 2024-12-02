@@ -27,9 +27,6 @@ public class loginServlet extends HttpServlet {
                 .buildExchange(req, resp);
 
         WebContext context=new WebContext(webExchange);
-
-
-
         springTemplateEngine.process("login.html",context,resp.getWriter());
     }
 }

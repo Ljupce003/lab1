@@ -30,19 +30,19 @@
         </tr>
         <tr>
             <td><b>Attendee Name </b></td>
-            <td>Petko Petkov</td>
+            <td th:text="${user_name}">Petko Petkov</td>
         </tr>
         <tr>
             <td><b>Client IP Address</b></td>
-            <td>127.0.0.1</td>
+            <td th:text="${ip_address}">127.0.0.1</td>
         </tr>
         <tr>
             <td><b>Booking for Event</b></td>
-            <td>Oppenheimer</td>
+            <td th:text="${title}">Oppenheimer</td>
         </tr>
         <tr>
             <td><b>Number of tickets</b></td>
-            <td>2</td>
+            <td th:text="${ticket_num}">2</td>
         </tr>
     </table>
 </section>

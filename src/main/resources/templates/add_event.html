@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form th:method="POST" th:action="${event==null} ? '/events/add' : '/events/edit/' + ${event.id}">
+    <label>Event Name:
+        <input type="text" name="event_name" th:value="${event?.name}">
+    </label><br>
+    <label>Event Description:
+        <input type="text" name="event_desc" th:value="${event?.description}">
+    </label><br>
+    <label>Popularity Score:
+        <input type="text" name="popularity" th:value="${event?.popularityScore}">
+    </label><br>
+    <label>Location id:
+        <select name="id">
+            <option th:each="location :${locations}" th:value="${location.getId()}" th:text="${location.name}"
+            th:selected="${event?.getId() == location.id}">
+            </option>
+        </select>
+    </label>
+    <br>
+    <input type="submit" th:value="${event==null} ? 'Add Event' : 'Save Changes'">
+</form>
+
+
+</body>
+
+<style>
+    form{
+        border: solid;
+        padding: 10px;
+        width: 350px;
+    }
+    label{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    input[type="text"]{
+        width: 200px;
+    }
+
+</style>
+</html>

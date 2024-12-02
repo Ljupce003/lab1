@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Hello this is the products page</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Event Name</th>
+        <th>Popularity Score</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Settings</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="event : ${eventi}">
+        <td th:text="${event.name}">Event Name</td>
+        <td th:text="${event.popularityScore}">Popularity Score</td>
+        <td th:text="${event.description}">Description</td>
+        <td th:text="${event.location.name}">Location</td>
+        <td>
+            <form th:action="@{/events/details/{id}(id=${event.id})}" method="get">
+                <button type="submit">Details</button>
+            </form><span>     </span>
+            <form th:action="@{/events/edit-form/{id}(id=${event.id})}" method="get">
+                <button type="submit">Edit</button>
+            </form>
+            <span>     </span>
+            <form th:method="post" th:action="@{/events/delete/{id} (id=${event.id})}" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<a href="/events/edit-form">Add New Event</a>
+
+
+<br>
+<br>
+<a href="/">Go To Event Booking Page</a>
+
+</body>
+
+<style>
+    table{
+        border-collapse: collapse;
+    }
+
+    td{
+        border: solid 1px;
+        padding: 10px;
+    }
+    th{
+        border: solid 2px;
+        padding: 6px;
+        background: cornflowerblue;
+    }
+    a[href="/events/edit-form"]{
+        text-align: center;
+        display: block;
+        border: black 1px;
+        background: darkseagreen;
+        width: 120px;
+        padding: 4px;
+        font: message-box;
+        text-decoration: none;
+    }
+    a[href="/"]{
+        text-align: center;
+        display: block;
+        border: black 1px;
+        background: yellow;
+        width: 120px;
+        padding: 4px;
+        font: message-box;
+        text-decoration: none;
+    }
+    form{
+        display: inline-block;
+    }
+    form[method="post"]{
+        padding-left: 15px;
+    }
+</style>
+</html>
