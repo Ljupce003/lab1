@@ -1,10 +1,12 @@
-package mk.ukim.finki.mk.lab.web;
+package mk.ukim.finki.mk.lab.web.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import mk.ukim.finki.mk.lab.model.AuthUser;
+import mk.ukim.finki.mk.lab.Bootstrap.Dataholder;
+import mk.ukim.finki.mk.lab.model.User;
+import mk.ukim.finki.mk.lab.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +16,13 @@ import java.util.List;
 public class loginFIlter implements Filter {
 
     private List<String> ignore_paths =null;
-    private AuthUser authUser = null;
+    //private AuthUser authUser = null;
+    private final UserService userService;
+
+    public loginFIlter(UserService userService) {
+        this.userService = userService;
+    }
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -37,6 +45,8 @@ public class loginFIlter implements Filter {
 
         String path=req.getServletPath();
 
+        User user = (User) req.getSession().getAttribute("authUser");
+
 
         String reqURL=req.getRequestURI();
         System.out.println(reqURL);
@@ -56,14 +66,28 @@ public class loginFIlter implements Filter {
 
             String user_name=req.getParameter("user_the_name");
             if(title!=null)req.getSession().setAttribute("title",title);
-            if(numTickets!=null)req.getSession().setAttribute("ticket_num",numTickets);
+            if(numTickets!=null){
+                Integer ticket_num=null;
+                try {
+                    ticket_num=Integer.parseInt(numTickets);
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
+                    resp.sendRedirect("/?intError="+e.getMessage());
+                }
+
+                req.getSession().setAttribute("ticket_num",ticket_num);
+            }
 
             if(user_name!=null){
-                this.authUser=new AuthUser(user_name);
+                user =new User(user_name);
+                //Dataholder.users.add(user);
+                this.userService.addUser(user_name);
+                req.getSession().setAttribute("authUser", user);
+                //this.authUser=new AuthUser(user_name);
             }
         }
 
-        if(this.authUser==null && !ignore_paths.contains(reqURL) ){
+        if(user ==null && !ignore_paths.contains(reqURL) ){
 
             resp.sendRedirect("/log");
         }

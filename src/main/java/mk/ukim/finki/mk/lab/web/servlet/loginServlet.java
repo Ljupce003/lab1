@@ -1,4 +1,4 @@
-package mk.ukim.finki.mk.lab.web;
+package mk.ukim.finki.mk.lab.web.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

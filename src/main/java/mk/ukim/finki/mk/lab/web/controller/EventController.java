@@ -48,9 +48,9 @@ public class EventController {
                             @RequestParam Long id){
 
         //update existing event
-        Event event=this.eventService.updateEvent(eventId,event_name,event_desc,popularity,id);
+        Optional<Event> event=this.eventService.updateEvent(eventId,event_name,event_desc,popularity,id);
 
-        if(event==null){
+        if(event.isEmpty()){
             System.out.println("Event not updated");
         }
 

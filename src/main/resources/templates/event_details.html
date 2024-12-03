@@ -33,7 +33,7 @@
             <td th:text="${event.location}">2</td>
         </tr>
         <tr th:if="${hasBooking}">
-            <td><b>Event Bookings</b>
+            <td style="width: 600px"><b>Event Bookings</b>
             <ul>
                 <li th:each="booking : ${event.getBookings()}" th:text="'Booking Atendee :'+${booking.getAttendeeName()} +'  Booking Tickets:'+
                 ${booking.getNumberOfTickets()} +' Booking Atendee Address :'+${booking.getAttendeeAddress()}"></li>

@@ -5,6 +5,11 @@ import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.mk.lab.model.Event;
 import mk.ukim.finki.mk.lab.model.EventBooking;
 import mk.ukim.finki.mk.lab.model.Location;
+import mk.ukim.finki.mk.lab.model.User;
+import mk.ukim.finki.mk.lab.repository.jpa.EventBookingRepository;
+import mk.ukim.finki.mk.lab.repository.jpa.EventRepository;
+import mk.ukim.finki.mk.lab.repository.jpa.LocationRepository;
+import mk.ukim.finki.mk.lab.repository.jpa.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,13 +19,24 @@ import java.util.Random;
 @Component
 public class Dataholder {
 
-    public static  List<Event> events =null;
-
-    public static List<Location> locations=null;
-
-    private final ArrayList<Long> occupied_ids=new ArrayList<>();
-
+    public static ArrayList<Event> events =null;
+    public static ArrayList<Location> locations=null;
     public static ArrayList<EventBooking> bookings=null;
+    public static ArrayList<User> users=null;
+
+    private final EventRepository eventRepository;
+    private final LocationRepository locationRepository;
+    private final EventBookingRepository eventBookingRepository;
+    private final UserRepository userRepository;
+
+    public Dataholder(EventRepository eventRepository,
+                      LocationRepository locationRepository,
+                      EventBookingRepository eventBookingRepository, UserRepository userRepository) {
+        this.eventRepository = eventRepository;
+        this.locationRepository = locationRepository;
+        this.eventBookingRepository = eventBookingRepository;
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     private void init(){
@@ -28,38 +44,37 @@ public class Dataholder {
 
         locations=new ArrayList<>(5);
 
-        locations.add(new Location(getEvId(random),"Doma","Orce Nikolov","80","home" ));
-        locations.add(new Location(getEvId(random),"Gosti","Davor","40","friend"));
-        locations.add(new Location(getEvId(random),"Javno","Kame Carsija","1500","public"));
-        locations.add(new Location(getEvId(random),"Koncert","Plostad","10000","public"));
+        if(this.locationRepository.count()==0){
+            locations.add(new Location("Doma","Orce Nikolov","80","home" ));
+            locations.add(new Location("Gosti","Davor","40","friend"));
+            locations.add(new Location("Javno","Kame Carsija","1500","public"));
+            locations.add(new Location("Koncert","Plostad","10000","public"));
+            this.locationRepository.saveAll(locations);
+        }
 
 
         events=new ArrayList<>(10);
 
-        events.add(new Event("Svadba","Heppy",1500,getEvId(random),locations.get(random.nextInt(0, locations.size()))));
-        events.add(new Event("Slava","Heppy",900,getEvId(random),locations.get(random.nextInt(0, locations.size()))));
-        events.add(new Event("Rodenden","Heppi",1050,getEvId(random),locations.get(random.nextInt(0, locations.size()))));
-
+        if(this.eventRepository.count()==0){
+            events.add(new Event("Svadba","Heppy",1500,locations.get(random.nextInt(0, locations.size()))));
+            events.add(new Event("Slava","Heppy",900,locations.get(random.nextInt(0, locations.size()))));
+            events.add(new Event("Rodenden","Heppi",1050,locations.get(random.nextInt(0, locations.size()))));
+            this.eventRepository.saveAll(events);
+        }
 
         bookings=new ArrayList<>(5);
-
-        bookings.add(new EventBooking("Rodenden","Petar","Orce Nikolov", 5L));
-
-
-
-    }
-
-    private Long getEvId(Random random){
-        boolean complete = false;
-        Long returnId=null;
-        while (!complete){
-            Long newId = random.nextLong(1,1000);
-            if(!this.occupied_ids.contains(newId)){
-                returnId=newId;
-                complete=true;
-                this.occupied_ids.add(newId);
-            }
+        if(this.eventBookingRepository.count()==0){
+            bookings.add(new EventBooking("Rodenden","Petar","Orce Nikolov", 5L));
+            bookings.add(new EventBooking("Slava","Marjan","Kosa Klisura",3L));
+            this.eventBookingRepository.saveAll(bookings);
         }
-        return returnId;
+
+        users=new ArrayList<>(5);
+        if(this.userRepository.count()==0){
+            users.add(new User("Nikola"));
+            this.userRepository.saveAll(users);
+        }
+
     }
+
 }

@@ -53,7 +53,9 @@
     </div>
 
 
-
+    <div th:if="${intError!=null}">
+        <p style="color: red" th:text="${intError}"></p>
+    </div>
 
 
     <div th:if="${sess_id!=null}">

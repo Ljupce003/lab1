@@ -1,6 +1,6 @@
-package mk.ukim.finki.mk.lab.repository;
+package mk.ukim.finki.mk.lab.repository.inmemory;
 
-import jdk.dynalink.linker.LinkerServices;
+
 import mk.ukim.finki.mk.lab.Bootstrap.Dataholder;
 import mk.ukim.finki.mk.lab.model.EventBooking;
 import org.springframework.stereotype.Repository;
@@ -9,9 +9,9 @@ import java.util.List;
 
 
 @Repository
-public class EventBookingRepository {
+public class inMemoryEventBookingRepository {
 
-    public EventBookingRepository() {
+    public inMemoryEventBookingRepository() {
     }
 
     public List<EventBooking> getAllBookings(){

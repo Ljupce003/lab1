@@ -1,5 +1,6 @@
 package mk.ukim.finki.mk.lab.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import mk.ukim.finki.mk.lab.model.Event;
@@ -21,9 +22,14 @@ public class EventListController {
     }
 
     @GetMapping("/")
-    public String getEventSelectionPage(HttpSession session, Model model){
+    public String getEventSelectionPage(HttpServletRequest req, HttpSession session, Model model){
 
         model.addAttribute("list",eventService.listAll());
+
+        String intError=req.getParameter("intError");
+        if(intError!=null){
+            model.addAttribute("intError",intError);
+        }
 
         Object results=session.getAttribute("results");
         if(results!=null){

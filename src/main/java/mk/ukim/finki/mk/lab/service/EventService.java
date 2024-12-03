@@ -11,7 +11,7 @@ public interface EventService {
     List<Event> listAll();
     List<Event> searchEvents(String text);
 
-    void AddEvent(String event_name, String event_desc, String popularity, String loc_id);
+    Optional<Event> AddEvent(String event_name, String event_desc, String popularity, String loc_id);
 
     List<Event> searchEventsAndByRating(String text,Double rating);
 
@@ -19,7 +19,7 @@ public interface EventService {
 
     Optional<Event> searchEventByID(Long id);
 
-    Event updateEvent(Long eventId,String event_name, String event_desc,String popularity,Long id);
+    Optional<Event> updateEvent(Long eventId,String event_name, String event_desc,String popularity,Long id);
 
-    public Event addBooking(String event_name, EventBooking booking);
+    Optional<Event> addBooking(String event_name, EventBooking booking);
 }
