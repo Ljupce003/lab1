@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-//@Table(name = "events_t")
 public class Event {
 
     @Column

@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "location")
 public class Location {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)

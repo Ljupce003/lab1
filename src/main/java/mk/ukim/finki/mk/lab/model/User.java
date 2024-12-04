@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
 
     @Id
@@ -22,10 +22,7 @@ public class User {
     @Column(nullable = false,unique = true)
     private String name;
 
-    //mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true
     @OneToMany()
-    //Ke dodade nova kolona vo booking namesto da kreira tabela za multivalued attributot
-//    @JoinColumn(name="user_identification")
     private List<EventBooking> bookings;
 
     public User(String name) {
