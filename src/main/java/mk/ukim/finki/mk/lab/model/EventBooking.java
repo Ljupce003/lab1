@@ -28,6 +28,7 @@ public class EventBooking {
     @Column
     private Long numberOfTickets;
 
+    //Ke go natera namesto nova tabela,da kreira kolona vo ovaa tabela i tamu da se zacuva user_id
 //    @ManyToOne()
 //    private User user;
 

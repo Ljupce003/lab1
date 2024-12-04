@@ -24,6 +24,8 @@ public class User {
 
     //mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true
     @OneToMany()
+    //Ke dodade nova kolona vo booking namesto da kreira tabela za multivalued attributot
+//    @JoinColumn(name="user_identification")
     private List<EventBooking> bookings;
 
     public User(String name) {
