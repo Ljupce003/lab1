@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div th:fragment="pageSection(attr_list,locations)">
+    <input type="hidden" name="showFiltered" value="1">
+<!--    <label>Select what to filter by-->
+<!--        <ul style="list-style: none">-->
+<!--            <li th:each=" attr : ${attr_list}"> <input type="radio" th:value=" ${attr}" name="radio_attr" th:text=" ${attr}"></li>-->
+<!--        </ul>-->
+<!--    </label>-->
+    <label>
+        <input type="text" name="Name" placeholder="enter event Name">
+    </label>
+    <label>
+        <input type="text" name="description" placeholder="enter event Description">
+    </label>
+    <label>
+        <input type="text" name="popularityScore" placeholder="enter minimum Popularity">
+    </label>
+    <label>
+        <select name="locationName">
+            <option value="" disabled selected>Select a location</option>
+            <option th:each="loc : ${locations}" th:value="${loc.name}" th:text="${loc.name}"></option>
+        </select>
+    </label>
+
+    <input type="submit" value="Filter">
+</div>
+
+</body>
+</html>

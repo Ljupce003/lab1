@@ -6,10 +6,18 @@ import mk.ukim.finki.mk.lab.model.Location;
 import mk.ukim.finki.mk.lab.repository.jpa.EventRepository;
 import mk.ukim.finki.mk.lab.repository.jpa.LocationRepository;
 import mk.ukim.finki.mk.lab.service.EventService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static mk.ukim.finki.mk.lab.service.specifications.FieldFilterSpecification.*;
+
 
 @Service
 public class EventServiceImplemented implements EventService {
@@ -88,5 +96,47 @@ public class EventServiceImplemented implements EventService {
             return Optional.of(this.eventRepository.save(event));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Page<Event> findPage(String name,String description,Double popularityScore,String locName , Integer pageNum, Integer PageSize) {
+        Specification<Event> specification=Specification
+                .where(filterContainsText(Event.class,"name",name))
+                .and(filterContainsText(Event.class,"description",description))
+                .and(greaterThan(Event.class,"popularityScore",popularityScore))
+                .and(filterContainsText(Event.class,"location.name",locName));
+
+
+        return this.eventRepository.findAll(specification,PageRequest.of(pageNum-1,PageSize));
+    }
+
+    @Override
+    public List<Event> filterBy(String filterBy, String text) {
+        if(filterBy==null) return new ArrayList<>();
+
+        if(filterBy.equals("Name")){
+            return this.eventRepository.searchByNameContainingIgnoreCase(text);
+        }
+        else if(filterBy.equals("Description")){
+            return this.eventRepository.searchByDescriptionContainingIgnoreCase(text);
+        }
+        else if(filterBy.equals("popularityScore")){
+            return this.eventRepository.searchByPopularityScoreAfter(Double.parseDouble(text));
+        }
+        else if(filterBy.equals("Location Name")){
+            List<Event> all_events=this.eventRepository.findAll();
+            List<Event> return_list=new ArrayList<>();
+            for (Event allEvent : all_events) {
+                if(allEvent.getLocation().getName().contains(text)) return_list.add(allEvent);
+            }
+            return return_list;
+        }
+        //TODO treba so paginacija so specification,ne vaka so iff ovi
+
+        else return new ArrayList<>();
+
+
+
+
     }
 }

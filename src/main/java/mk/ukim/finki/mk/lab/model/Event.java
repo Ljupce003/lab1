@@ -43,4 +43,14 @@ public class Event {
         this.bookings=new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", popularityScore=" + popularityScore +
+                ", id=" + id +
+                ", location=" + location +
+                '}';
+    }
 }

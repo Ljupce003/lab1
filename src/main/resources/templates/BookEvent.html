@@ -35,15 +35,15 @@
 
 
     <br><br>
-    <form th:method="POST" th:action="@{/}">
+    <form th:method="POST" th:action="@{/}" onsubmit="return check()">
         <label>Insert Text
-            <input type="text" name="text">
+            <input type="text" name="text" id="text1">
         </label>
         <label>Insert rating
-            <input type="text" name="rating">
+            <input type="text" name="rating" id="text2">
         </label>
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" >
     </form>
 
     <div th:if="${list_available}">
@@ -65,5 +65,18 @@
 
 
 </main>
+<script>
+    function check() {
+        let text = document.getElementById('text1').value.trim();
+        let rating = document.getElementById('text2').value.trim();
+
+
+        if (text === "" && rating === "") {
+            alert("Please fill at least one field.");
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

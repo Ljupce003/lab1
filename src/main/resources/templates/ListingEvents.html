@@ -48,6 +48,31 @@
 <br>
 <a href="/">Go To Event Booking Page</a>
 
+
+
+<br><br>
+<form th:method="GET" th:action="@{/events}" th:insert="~{fragments/Paging.html:: pageSection(${attr_list},${locations})}">
+<!--    <input type="hidden" name="showFiltered" value="1">-->
+<!--    <label>Select what to filter by-->
+<!--        <ul style="list-style: none">-->
+<!--            <li th:each=" attr : ${attr_list}"> <input type="radio" th:value=" ${attr}" name="radio_attr" th:text=" ${attr}"></li>-->
+<!--        </ul>-->
+<!--    </label>-->
+<!--    <label>Insert Text to be in the selected attribute-->
+<!--        <input type="text" name="text_to_search">-->
+<!--    </label>-->
+
+<!--    <input type="submit" value="Submit">-->
+
+
+</form>
+
+<div th:if="${page!=null}">
+    <ul style="list-style: none">
+        <li th:each=" article : ${page.getContent()}"  th:text=" ${article} "></li>
+    </ul>
+</div>
+<!--' Name: '+${article.name}+' Desc: '+${article.description}-->
 </body>
 
 <style>

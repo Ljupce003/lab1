@@ -49,7 +49,7 @@ public class EventListServlet extends HttpServlet {
         context.setVariable("sess_id",session_id);
         context.setVariable("sess_t",session_cr_t);
 
-        springTemplateEngine.process("listEvents.html",context,resp.getWriter());
+        springTemplateEngine.process("BookEvent.html",context,resp.getWriter());
     }
 
     @Override

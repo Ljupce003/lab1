@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event,Long> {
+public interface EventRepository  extends JpaSpecificationRepository<Event,Long> {
 
     void deleteById(Long id);
 
@@ -18,6 +18,12 @@ public interface EventRepository extends JpaRepository<Event,Long> {
     List<Event> findAllByLocation_Id(Long locationId);
 
     Event findAllByName(String name);
+
+    List<Event> searchByNameContainingIgnoreCase(String name);
+
+    List<Event> searchByDescriptionContainingIgnoreCase(String desc);
+
+    List<Event> searchByPopularityScoreAfter(Double val);
 
     List<Event> searchByNameContainingOrDescriptionContaining(String text,String descriptionText);
 

@@ -2,7 +2,6 @@ package mk.ukim.finki.mk.lab.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import mk.ukim.finki.mk.lab.model.Event;
 import mk.ukim.finki.mk.lab.service.EventService;
 import org.springframework.stereotype.Controller;
@@ -40,7 +39,7 @@ public class EventListController {
         model.addAttribute("sess_id",session.getId());
         model.addAttribute("sess_t",session.getCreationTime());
 
-        return "listEvents";
+        return "BookEvent";
     }
 
     @PostMapping("/")
